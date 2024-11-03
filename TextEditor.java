@@ -27,6 +27,7 @@ public class TextEditor extends JFrame {
     String currentFontName = "Arial";
     int currentFontStyle = Font.PLAIN;
     int currentFontSize = 12;
+    JFrame findrepFrame;
 
     // Variable declaration
     private JMenuItem arial;
@@ -132,7 +133,6 @@ public class TextEditor extends JFrame {
             filename = file;
         
         setResizable(true);
-        // panel.setVisible(false);
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -370,6 +370,7 @@ public class TextEditor extends JFrame {
         paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
         undomenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
         redomenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_H, KeyEvent.CTRL_DOWN_MASK), "none");
         findRep.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_DOWN_MASK));
     }
 
@@ -532,12 +533,14 @@ public class TextEditor extends JFrame {
             }
         });
 
+        // paste button
         paste.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 textArea.paste();
             }
         });
 
+        // undo menu
         undomenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (undoManager.canUndo())
@@ -545,6 +548,7 @@ public class TextEditor extends JFrame {
             }
         });
 
+        // redo menu
         redomenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (undoManager.canRedo())
@@ -552,6 +556,7 @@ public class TextEditor extends JFrame {
             }
         });
 
+        // date time insertion
         dateandtime.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm a");
@@ -560,6 +565,54 @@ public class TextEditor extends JFrame {
             }
         });
 
+        // find and replace frame
+        findRep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                findRepActionPerformed(evt);
+            }
+        });
+    }
+
+    void findRepActionPerformed(ActionEvent evt)
+    {
+        findrepFrame = new JFrame("Find and Replace");
+        findrepFrame.setSize(470, 200);
+        findrepFrame.setVisible(true);
+        findrepFrame.setResizable(false);
+        findrepFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        findrepFrame.setLayout(null);
+        findrepFrame.setLocationRelativeTo(this);
+        JCheckBox matchCase = new JCheckBox("Match case");
+        JLabel findBoxLabel = new JLabel("Find: ");
+        JLabel replaceBoxLabel = new JLabel("Replace: ");
+        JButton findButton = new JButton("Find next");
+        JButton replaceButton = new JButton("Replace");
+        JButton replaceAllButton = new JButton("Replace all");
+        JTextField findTextField = new JTextField();
+        JTextField replaceTextField = new JTextField();
+
+        findBoxLabel.setBounds(20, 20, 100, 25); // x, y, width, height
+        findTextField.setBounds(120, 20, 315, 25); // x, y, width, height
+
+        replaceBoxLabel.setBounds(20, 60, 100, 25); // x, y, width, height
+        replaceTextField.setBounds(120, 60, 315, 25); // x, y, width, height
+
+        matchCase.setBounds(20, 100, 100, 25); // x, y, width, height
+        
+        // Set bounds for buttons to fit in frame width
+        findButton.setBounds(130, 100, 90, 25); // x, y, width, height
+        replaceButton.setBounds(230, 100, 90, 25); // x, y, width, height
+        replaceAllButton.setBounds(330, 100, 97, 25); // x, y, width, height
+
+
+        findrepFrame.add(findBoxLabel);
+        findrepFrame.add(findTextField);
+        findrepFrame.add(replaceBoxLabel);
+        findrepFrame.add(replaceTextField);
+        findrepFrame.add(findButton);
+        findrepFrame.add(replaceButton);
+        findrepFrame.add(matchCase);
+        findrepFrame.add(replaceAllButton);
     }
 
     void setFormatMenuActionListeners() {
