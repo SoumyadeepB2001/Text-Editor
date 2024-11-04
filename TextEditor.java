@@ -676,23 +676,50 @@ public class TextEditor extends JFrame {
         }
     }
 
-    void replaceButtonActionPerformed(ActionEvent evt, JTextField findTextField, JTextField replaceTextField) {
-        String replacementText = replaceTextField.getText();
-        String searchText = findTextField.getText();
+    void replaceButtonActionPerformed(ActionEvent evt, JTextField findTextField, JTextField replaceTextField, JCheckBox matchCaseCheckBox) {
+    String replacementText = replaceTextField.getText();
+    String searchText = findTextField.getText();
+    String content = textArea.getText();
     
-        if (searchText.length() > 0 && textArea.getSelectionStart() != textArea.getSelectionEnd()) {
-            // Check if selected text matches the search term
-            String selectedText = textArea.getSelectedText();
-            if (selectedText != null && selectedText.equals(searchText)) {
-                textArea.replaceRange(replacementText, textArea.getSelectionStart(), textArea.getSelectionEnd());
+    // Check if there's text in both the search and text area fields
+    if (searchText.length() == 0 || content.length() == 0) {
+        JOptionPane.showMessageDialog(null, "Nothing to search and replace");
+        return;
+    }
+    
+    // Determine if case-sensitive or case-insensitive matching is needed
+    boolean matchCase = matchCaseCheckBox.isSelected();
+    if (!matchCase) {
+        // Convert both text and search term to lowercase for case-insensitive search
+        content = content.toLowerCase();
+        searchText = searchText.toLowerCase();
+    }
+    
+    // Check if the text area contains the search text
+    if (content.contains(searchText)) {
+        // Find the current selection, then replace if it matches
+        int start = textArea.getSelectionStart();
+        int end = textArea.getSelectionEnd();
+        String selectedText = textArea.getSelectedText();
+        
+        // Check if selected text matches the search term based on case sensitivity
+        if (selectedText != null) {
+            boolean isMatch = matchCase ? selectedText.equals(searchText) : selectedText.equalsIgnoreCase(searchText);
+
+            if (isMatch) {
+                // Replace the selected text with replacement text
+                textArea.replaceRange(replacementText, start, end);
             } else {
                 JOptionPane.showMessageDialog(null, "Selected text does not match the search term.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Nothing to search and replace");
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "Search key not found");
     }
-
+}
+    
     void replaceAllButtonActionPerformed(ActionEvent evt, JTextField findTextField, JTextField replaceTextField, JCheckBox matchCase) {
         String replacementText = replaceTextField.getText();
         String searchText = findTextField.getText();
