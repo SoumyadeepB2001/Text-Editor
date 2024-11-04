@@ -28,6 +28,8 @@ public class TextEditor extends JFrame {
     int currentFontStyle = Font.PLAIN;
     int currentFontSize = 12;
     JFrame findrepFrame;
+    int n, z = 0; // int n and int z is used in 'Find' operation
+    String s = "", s2 = ""; // s is used to store the 'Find' text value and s2 is used to store the 'Replace' text value    
 
     // Variable declaration
     private JMenuItem arial;
@@ -613,6 +615,65 @@ public class TextEditor extends JFrame {
         findrepFrame.add(replaceButton);
         findrepFrame.add(matchCase);
         findrepFrame.add(replaceAllButton);
+
+        findButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                findButtonActionPerformed(evt, findTextField, matchCase);
+            }
+        });
+
+        replaceButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                replaceButtonActionPerformed(evt);
+            }
+        });
+
+        replaceAllButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                replaceAllButtonActionPerformed(evt);
+            }
+        });
+    }
+
+    void findButtonActionPerformed(ActionEvent evt, JTextField findTextField, JCheckBox matchCase)
+    {
+        String text = textArea.getText();
+        String searchString = findTextField.getText();
+    
+        if (text.length() == 0 || searchString.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Nothing to search");
+            return;
+        }
+    
+        // Reset search if new search string is entered
+        if (z == 0 || !searchString.equals(s)) {
+            z = 1;  // Indicate that search has begun
+            n = 0;  // Reset starting position
+            s = searchString;  // Store current search string for next search comparison
+        }
+    
+        boolean match = matchCase.isSelected();
+        if (!match) {
+            text = text.toLowerCase();
+            searchString = searchString.toLowerCase();
+        }
+    
+        // Check if the search string is found in text
+        if (!text.contains(searchString)) {
+            JOptionPane.showMessageDialog(null, "Search key not found");
+            return;
+        }
+    
+        // Find the next occurrence
+        int start = text.indexOf(searchString, n);
+        if (start >= 0) {
+            textArea.requestFocus();
+            textArea.select(start, start + searchString.length());
+            n = start + searchString.length(); // Update position for next search
+        } else {
+            JOptionPane.showMessageDialog(null, "No more occurrences found");
+            n = 0; // Reset position to start over if needed
+        }
     }
 
     void setFormatMenuActionListeners() {
