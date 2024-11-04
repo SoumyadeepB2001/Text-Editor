@@ -630,7 +630,7 @@ public class TextEditor extends JFrame {
 
         replaceAllButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                replaceAllButtonActionPerformed(evt);
+                replaceAllButtonActionPerformed(evt, findTextField, replaceTextField, matchCase);
             }
         });
     }
@@ -691,6 +691,48 @@ public class TextEditor extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Nothing to search and replace");
         }
+    }
+
+    void replaceAllButtonActionPerformed(ActionEvent evt, JTextField findTextField, JTextField replaceTextField, JCheckBox matchCase) {
+        String replacementText = replaceTextField.getText();
+        String searchText = findTextField.getText();
+        String content = textArea.getText();
+
+        if (searchText.length() > 0 && content.length() > 0) {
+            // Determine case-sensitivity
+            boolean match = matchCase.isSelected();
+            if (!match) {
+                content = content.toLowerCase();
+                searchText = searchText.toLowerCase();
+            }
+
+            // Check if the search term exists in the text
+            if (!content.contains(searchText)) {
+                JOptionPane.showMessageDialog(null, "Search key not found");
+                return;
+            }
+
+            // Start replacing all occurrences
+            int start = 0;
+            int index = content.indexOf(searchText, start);
+
+            while (index >= 0) {
+                textArea.requestFocus();
+                textArea.select(index, index + searchText.length());
+                textArea.replaceRange(replacementText, index, index + searchText.length());
+
+                // Update content and find the next occurrence
+                content = textArea.getText();
+                if (!match) {
+                    content = content.toLowerCase(); // Update case-lowered content
+                }
+                start = index + replacementText.length(); // Move past the replaced text
+                index = content.indexOf(searchText, start);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nothing to search and replace");
+        }
+
     }
 
     void setFormatMenuActionListeners() {
