@@ -624,7 +624,7 @@ public class TextEditor extends JFrame {
 
         replaceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                replaceButtonActionPerformed(evt);
+                replaceButtonActionPerformed(evt, findTextField, replaceTextField);
             }
         });
 
@@ -673,6 +673,23 @@ public class TextEditor extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No more occurrences found");
             n = 0; // Reset position to start over if needed
+        }
+    }
+
+    void replaceButtonActionPerformed(ActionEvent evt, JTextField findTextField, JTextField replaceTextField) {
+        String replacementText = replaceTextField.getText();
+        String searchText = findTextField.getText();
+    
+        if (searchText.length() > 0 && textArea.getSelectionStart() != textArea.getSelectionEnd()) {
+            // Check if selected text matches the search term
+            String selectedText = textArea.getSelectedText();
+            if (selectedText != null && selectedText.equals(searchText)) {
+                textArea.replaceRange(replacementText, textArea.getSelectionStart(), textArea.getSelectionEnd());
+            } else {
+                JOptionPane.showMessageDialog(null, "Selected text does not match the search term.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nothing to search and replace");
         }
     }
 
