@@ -624,7 +624,7 @@ public class TextEditor extends JFrame {
 
         replaceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                replaceButtonActionPerformed(evt, findTextField, replaceTextField);
+                replaceButtonActionPerformed(evt, findTextField, replaceTextField, matchCase);
             }
         });
 
