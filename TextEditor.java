@@ -32,89 +32,20 @@ public class TextEditor extends JFrame {
     String s = "", s2 = ""; // s is used to store the 'Find' text value and s2 is used to store the 'Replace' text value    
 
     // Variable declaration
-    private JMenuItem arial;
-    private JMenuItem bold;
-    private JMenuItem bolditalics;
+    private JMenuItem arial, bold, bolditalics, italics, algerian, cambria, calibri, verdana, segoeui, tahoma, timesnewroman;
+    private JMenuItem size8, size9, size10, size11, size12, size13, size14, size16, size18, size20, size24, size26, size28, size36, size48, size72;
+    private JMenuItem bluefc, cyanfc, magentafc, yellowfc, greenfc, redfc, pinkfc, orangefc, blackfc, grayfc, lgrayfc, dgrayfc, whitefc;
+    private JMenuItem yellowbgc, redbgc, pinkbgc, blackbgc, whitebgc, orangebgc, cyanbgc, magentabgc, graybgc, lgraybgc, dgraybgc, greenbgc, bluebgc;
+    private JMenuItem close, copy, cut, paste, plain, print, redomenu, save, saveas, undomenu, findRep, newfile, open, dateandtime;
+    private JMenuItem about, contact;
     private JCheckBoxMenuItem wrapTextCheckBox;
-    private JMenuItem close;
-    private JMenuItem copy;
-    private JMenuItem cut;
-    private JMenu edit;
-    private JMenu file;
-    private JMenu help;
-    private JMenuItem italics;
-    private JMenu format;
-    private JMenu bgc;
-    private JMenu fontcol;
-    private JMenu font;
-    private JMenu fontStyle;
-    private JMenu fontSize;
+    private JMenu edit, file, help, format, bgc, fontcol, font, fontStyle, fontSize;
     private JMenuBar menuBar;
-    private JMenuItem algerian;
-    private JMenuItem yellowbgc;
-    private JMenuItem redbgc;
-    private JMenuItem pinkbgc;
-    private JMenuItem blackbgc;
-    private JMenuItem whitebgc;
-    private JMenuItem orangebgc;
-    private JMenuItem cyanbgc;
-    private JMenuItem magentabgc;
-    private JMenuItem graybgc;
-    private JMenuItem lgraybgc;
-    private JMenuItem cambria;
-    private JMenuItem dgraybgc;
-    private JMenuItem calibri;
-    private JMenuItem verdana;
-    private JMenuItem segoeui;
-    private JMenuItem size8;
-    private JMenuItem size9;
-    private JMenuItem size10;
-    private JMenuItem size11;
-    private JMenuItem size12;
-    private JMenuItem size14;
-    private JMenuItem contact;
-    private JMenuItem size16;
-    private JMenuItem size18;
-    private JMenuItem size20;
-    private JMenuItem size24;
-    private JMenuItem bluefc;
-    private JMenuItem cyanfc;
-    private JMenuItem magentafc;
-    private JMenuItem yellowfc;
-    private JMenuItem greenfc;
-    private JMenuItem redfc;
-    private JMenuItem about;
-    private JMenuItem pinkfc;
-    private JMenuItem orangefc;
-    private JMenuItem blackfc;
-    private JMenuItem grayfc;
-    private JMenuItem lgrayfc;
-    private JMenuItem dgrayfc;
-    private JMenuItem whitefc;
-    private JMenuItem size26;
-    private JMenuItem size28;
-    private JMenuItem size36;
-    private JMenuItem greenbgc;
-    private JMenuItem size48;
-    private JMenuItem size72;
-    private JMenuItem tahoma;
-    private JMenuItem size13;
-    private JMenuItem dateandtime;
-    private JMenuItem bluebgc;
     private JScrollPane jScrollPane2;
-    private JMenuItem newfile;
-    private JMenuItem open;
-    private JMenuItem paste;
-    private JMenuItem plain;
-    private JMenuItem print;
-    private JMenuItem redomenu;
-    private JMenuItem save;
-    private JMenuItem saveas;
     private JTextArea textArea;
-    private JMenuItem timesnewroman;
-    private JMenuItem undomenu;
-    private JMenuItem findRep;
 
+    
+    
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
